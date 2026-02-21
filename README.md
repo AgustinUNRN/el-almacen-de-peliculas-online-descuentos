@@ -266,7 +266,7 @@ La configuración principal se encuentra en `src/main/resources/application.yml`
 
 ```yaml
 server:
-  port: 8084                        # Puerto del microservicio
+  port: 8085                        # Puerto del microservicio
 
 spring:
   application:
