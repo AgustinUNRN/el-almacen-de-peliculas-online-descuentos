@@ -1,0 +1,35 @@
+# ====== Etapa 1: build con Maven ======
+FROM maven:3.9.9-eclipse-temurin-21 AS build
+
+WORKDIR /app
+
+# Copiamos pom y resolvemos dependencias (cachea bien)
+COPY pom.xml .
+
+# Copiamos el código
+COPY src ./src
+
+# Compilamos y empaquetamos (sin ejecutar ni compilar tests)
+# Use -Dmaven.test.skip=true to avoid test compilation and test-scoped resolution
+RUN mvn -B -Dmaven.test.skip=true clean package
+
+# ====== Etapa 2: imagen liviana para correr la app ======
+FROM eclipse-temurin:21-jre
+
+WORKDIR /app
+
+# Instalar curl para healthchecks
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+# Copiamos el jar generado en la etapa anterior
+ARG JAR_FILE=target/*.jar
+COPY --from=build /app/${JAR_FILE} app.jar
+
+# Puerto interno de la aplicación (consistente con otros servicios)
+EXPOSE 8085
+
+# Variables opcionales (ej: timezone)
+ENV TZ=America/Argentina/Buenos_Aires
+
+# Levantamos la app
+ENTRYPOINT ["java","-jar","app.jar"]
