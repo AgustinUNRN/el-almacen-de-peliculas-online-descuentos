@@ -42,4 +42,5 @@ public class CuponRepository {
     public List<CuponEntity> listarCupones() {
         return em.createQuery("SELECT c FROM CuponEntity c", CuponEntity.class).getResultList();
     }
+
 }

@@ -1,18 +1,20 @@
-server:
-  port: 8085
-
 spring:
-  application:
-    name: descuentos-service
   datasource:
-    url: jdbc:mysql://localhost:3306/db_descuentos
+    # Dentro de Docker, NO uses localhost. Usa el nombre del servicio.
+    url: jdbc:mysql://descuentos-mysql:3306/db_descuentos 
     username: root
-    password:
+    password: root
+  jpa:
+    hibernate:
+      # Esto evita que Hibernate intente modificar la tabla y falle por las fechas
+      ddl-auto: none 
+    show-sql: true
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9090/realms/videoclub
+          # También cambiamos localhost por el nombre del contenedor de Keycloak
+          issuer-uri: http://keycloak-sso:9090/realms/videoclub
 
 logging:
   level:

@@ -22,10 +22,10 @@ public class CuponEntity {
     @Column(nullable = false, length = 15)
     private String nombre;
 
-    @Column(name = "fecha_inicio", nullable = false)
+    @Column(name = "fechaInicio", nullable = false)
     private LocalDate fechaInicio;
 
-    @Column(name = "fecha_fin", nullable = false)
+    @Column(name = "fechaFin", nullable = false)
     private LocalDate fechaFin;
 
     private Float monto;
