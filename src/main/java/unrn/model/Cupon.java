@@ -55,7 +55,7 @@ public class Cupon {
         this.porcentaje = porcentaje;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -71,11 +71,11 @@ public class Cupon {
         return fechaFin;
     }
 
-    public double getMonto() {
+    public Float getMonto() {
         return monto;
     }
 
-    public int getPorcentaje() {
+    public Integer getPorcentaje() {
         return porcentaje;
     }
 
