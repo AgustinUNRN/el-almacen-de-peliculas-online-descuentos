@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/descuentos")
+@RequestMapping("/api/admin/descuentos")
 public class DescuentoController {
 
     @Autowired
@@ -22,8 +22,7 @@ public class DescuentoController {
     public Map<String, String> test() {
         return Map.of(
                 "status", "OK",
-                "message", "Servicio de Descuentos operando en el puerto 8085"
-        );
+                "message", "Servicio de Descuentos operando en el puerto 8085");
     }
 
     @GetMapping("/validar")

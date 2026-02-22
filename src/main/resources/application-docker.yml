@@ -1,0 +1,27 @@
+security:
+  jwt:
+    jwk-set-uri: http://keycloak-sso:8080/realms/videoclub/protocol/openid-connect/certs
+    expected-issuer: http://localhost:9090/realms/videoclub
+
+# Note: Do NOT set spring.security.oauth2.resourceserver.jwt.issuer-uri in docker profile.
+server:
+  port: 8085
+
+spring:
+  application:
+    name: descuentos-service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Intentionally left unset for docker profile: we use a custom JwtDecoder
+          # issuer-uri: http://keycloak-sso:8080/realms/videoclub
+
+# In docker/profile the service will pick this file (spring.profiles.active=docker)
+# This avoids hardcoding localhost in container runtime where localhost != keycloak container
+
+# Custom JWT settings used by the service when running inside Docker
+security:
+  jwt:
+    jwk-set-uri: http://keycloak-sso:8080/realms/videoclub/protocol/openid-connect/certs
+    expected-issuer: http://localhost:9090/realms/videoclub
