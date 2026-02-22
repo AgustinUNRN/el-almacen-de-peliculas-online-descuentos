@@ -14,7 +14,8 @@ spring:
       resourceserver:
         jwt:
           # También cambiamos localhost por el nombre del contenedor de Keycloak
-          issuer-uri: http://keycloak-sso:9090/realms/videoclub
+          issuer-uri: http://keycloak-sso:8080/realms/videoclub
+          jwk-set-uri: http://keycloak-sso:8080/realms/videoclub/protocol/openid-connect/certs
 
 logging:
   level:
