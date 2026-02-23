@@ -68,8 +68,4 @@ public class Cupon {
         return monto;
     }
 
-    public Integer getPorcentaje() {
-        return porcentaje;
-    }
-
 }
