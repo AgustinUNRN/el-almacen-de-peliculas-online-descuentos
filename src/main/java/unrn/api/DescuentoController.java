@@ -44,6 +44,16 @@ public class DescuentoController {
         return ResponseEntity.ok(cupones); // Devuelve 200 con la lista de DTOs
     }
 
+    @GetMapping("/listar-vigentes")
+    public ResponseEntity<List<CuponDTO>> listarVigentes() {
+        List<CuponDTO> cuponesVigentes = cuponService.listarCuponesVigentes();
+
+        if (cuponesVigentes.isEmpty()) {
+            return ResponseEntity.noContent().build(); // Devuelve 204 si no hay datos
+        }
+        return ResponseEntity.ok(cuponesVigentes); // Devuelve 200 con la lista de DTOs
+    }
+
     @PostMapping("/crear")
     public ResponseEntity<CuponDTO> crearCupon(@RequestBody CuponDTO cuponDTO) {
         try {

@@ -43,4 +43,8 @@ public class CuponRepository {
         return em.createQuery("SELECT c FROM CuponEntity c", CuponEntity.class).getResultList();
     }
 
+    public List<CuponEntity> listarCuponesVigentes() {
+        return em.createQuery("SELECT c FROM CuponEntity c WHERE c.fechaInicio <= CURRENT_DATE AND c.fechaFin >= CURRENT_DATE", CuponEntity.class).getResultList();
+    }
+
 }

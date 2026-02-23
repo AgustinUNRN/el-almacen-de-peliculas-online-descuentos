@@ -21,11 +21,11 @@ public class CuponService {
         return repository.buscarPorId(id);
     }
 
-    public Optional<CuponDTO> validarCupon(String codigo) {
-        CuponEntity cuponEntity = repository.buscarPorNombre(codigo);
+    public Optional<CuponDTO> validarCupon(String nombre) {
+        CuponEntity cuponEntity = repository.buscarPorNombre(nombre);
 
         if (cuponEntity == null) {
-            System.out.println("DEBUG: El repositorio no encontró nada para: " + codigo);
+            System.out.println("DEBUG: El repositorio no encontró nada para: " + nombre);
             return Optional.empty();
         }
 
@@ -59,6 +59,13 @@ public class CuponService {
     @Transactional(readOnly = true)
     public List<CuponDTO> listarCupones() {
         return repository.listarCupones().stream()
+                .map(this::convertirADto)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<CuponDTO> listarCuponesVigentes() {
+        return repository.listarCuponesVigentes().stream()
                 .map(this::convertirADto)
                 .toList();
     }
