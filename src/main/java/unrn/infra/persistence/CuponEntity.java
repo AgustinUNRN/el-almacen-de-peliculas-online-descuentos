@@ -30,9 +30,7 @@ public class CuponEntity {
 
     private Float monto;
 
-    private Integer porcentaje;
-
     public Cupon asDomain() {
-        return new Cupon(id, nombre, fechaInicio, fechaFin, monto, porcentaje);
+        return new Cupon(id, nombre, fechaInicio, fechaFin, monto);
     }
 }
