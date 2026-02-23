@@ -10,7 +10,6 @@ public class Cupon {
     static final String ERROR_FECHA_FIN = "La fecha de fin no puede ser anterior a la fecha de inicio";
     static final String ERROR_FECHA_FIN_VACIA = "La fecha de fin no puede ser vacía";
     static final String ERROR_MONTO = "El monto del descuento debe ser positivo";
-    static final String ERROR_PORCENTAJE = "El porcentaje de descuento debe estar entre 0 y 100";
 
     private Integer id;
 
@@ -22,9 +21,7 @@ public class Cupon {
 
     private Float monto;
 
-    private Integer porcentaje;
-
-    public Cupon (Integer id, String nombre, LocalDate fechaInicio, LocalDate fechaFin, Float monto, Integer porcentaje) {
+    public Cupon (Integer id, String nombre, LocalDate fechaInicio, LocalDate fechaFin, Float monto) {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new IllegalArgumentException(ERROR_NOMBRE);
         }
@@ -43,16 +40,12 @@ public class Cupon {
         if (monto != null && monto <= 0) {
             throw new IllegalArgumentException(ERROR_MONTO);
         }
-        if (porcentaje != null && (porcentaje < 0 || porcentaje > 100)) {
-            throw new IllegalArgumentException(ERROR_PORCENTAJE);
-        }
 
         this.id = id;
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.monto = monto;
-        this.porcentaje = porcentaje;
     }
 
     public Integer getId() {
@@ -73,10 +66,6 @@ public class Cupon {
 
     public Float getMonto() {
         return monto;
-    }
-
-    public Integer getPorcentaje() {
-        return porcentaje;
     }
 
 }

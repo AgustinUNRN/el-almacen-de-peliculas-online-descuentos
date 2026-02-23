@@ -51,7 +51,6 @@ public class CuponService {
                 entity.getId(),
                 entity.getNombre(),
                 entity.getMonto(),
-                entity.getPorcentaje(),
                 entity.getFechaInicio(),
                 entity.getFechaFin()
         );
@@ -69,7 +68,6 @@ public class CuponService {
         CuponEntity entity = new CuponEntity();
         entity.setNombre(cuponDTO.nombre());
         entity.setMonto(cuponDTO.monto());
-        entity.setPorcentaje(cuponDTO.porcentaje());
         entity.setFechaInicio(cuponDTO.fechaInicio());
         entity.setFechaFin(cuponDTO.fechaFin());
 
