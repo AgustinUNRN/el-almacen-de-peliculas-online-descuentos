@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import unrn.dto.CuponDTO;
+import unrn.dto.ValidarCuponResponse;
 import unrn.infra.persistence.CuponEntity;
 import unrn.infra.persistence.CuponRepository;
 import unrn.model.Cupon;
@@ -82,4 +83,12 @@ public class CuponService {
         return convertirADto(guardado);
     }
 
+    public ValidarCuponResponse validarCuponRpc(String nombreCupon) {
+        Optional<CuponDTO> cuponOpt = validarCupon(nombreCupon);
+        if (cuponOpt.isEmpty()) {
+            return new ValidarCuponResponse(false, null, "NO_EXISTE_O_NO_VIGENTE");
+        }
+        CuponDTO cupon = cuponOpt.get();
+        return new ValidarCuponResponse(true, cupon.monto(), null); // motivo null cuando es válido
+    }
 }
