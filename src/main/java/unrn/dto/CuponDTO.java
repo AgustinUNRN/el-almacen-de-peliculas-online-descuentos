@@ -8,13 +8,13 @@ import java.time.LocalDate;
 public record CuponDTO (
         Integer id,
         String nombre,
-        Float monto,
+        Float porcentaje,
         @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate fechaInicio,
         @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate fechaFin){
 
     public static Object from(CuponEntity cuponEntity) {
-        return new CuponDTO(cuponEntity.getId(), cuponEntity.getNombre(), cuponEntity.getMonto(), cuponEntity.getFechaInicio(), cuponEntity.getFechaFin());
+        return new CuponDTO(cuponEntity.getId(), cuponEntity.getNombre(), cuponEntity.getPorcenaje(), cuponEntity.getFechaInicio(), cuponEntity.getFechaFin());
     }
 }

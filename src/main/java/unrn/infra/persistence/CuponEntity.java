@@ -28,9 +28,9 @@ public class CuponEntity {
     @Column(name = "fechaFin", nullable = false)
     private LocalDate fechaFin;
 
-    private Float monto;
+    private Float porcentaje;
 
     public Cupon asDomain() {
-        return new Cupon(id, nombre, fechaInicio, fechaFin, monto);
+        return new Cupon(id, nombre, fechaInicio, fechaFin, porcentaje);
     }
 }

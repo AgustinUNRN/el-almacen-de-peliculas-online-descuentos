@@ -51,7 +51,7 @@ public class CuponService {
         return new CuponDTO(
                 entity.getId(),
                 entity.getNombre(),
-                entity.getMonto(),
+                entity.getPorcentaje(),
                 entity.getFechaInicio(),
                 entity.getFechaFin()
         );
@@ -75,7 +75,7 @@ public class CuponService {
     public CuponDTO crearCupon(CuponDTO cuponDTO) {
         CuponEntity entity = new CuponEntity();
         entity.setNombre(cuponDTO.nombre());
-        entity.setMonto(cuponDTO.monto());
+        entity.setPorcentaje(cuponDTO.porcentaje());
         entity.setFechaInicio(cuponDTO.fechaInicio());
         entity.setFechaFin(cuponDTO.fechaFin());
 
@@ -89,6 +89,6 @@ public class CuponService {
             return new ValidarCuponResponse(false, null, "NO_EXISTE_O_NO_VIGENTE");
         }
         CuponDTO cupon = cuponOpt.get();
-        return new ValidarCuponResponse(true, cupon.monto(), null); // motivo null cuando es válido
+        return new ValidarCuponResponse(true, cupon.porcentaje(), null); // motivo null cuando es válido
     }
 }

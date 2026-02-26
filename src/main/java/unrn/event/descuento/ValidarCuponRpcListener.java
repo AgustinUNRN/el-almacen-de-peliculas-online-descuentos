@@ -20,9 +20,6 @@ public class ValidarCuponRpcListener {
         if (req == null || req.nombreCupon() == null || req.nombreCupon().isBlank()) {
             return new ValidarCuponResponse(false, null, "CODIGO_VACIO");
         }
-
-        // La lógica concreta depende de cómo sea tu CuponService hoy.
-        // Concepto: "existe + vigente" => valido=true y devolver monto/porcentaje
         return cuponService.validarCuponRpc(req.nombreCupon());
     }
 }

@@ -4,6 +4,6 @@ import java.io.Serializable;
 
 public record ValidarCuponResponse(
         boolean valido,
-        Float monto,
+        Float porcentaje,
         String motivo
 ) implements Serializable {}
