@@ -15,6 +15,6 @@ public record CuponDTO (
         LocalDate fechaFin){
 
     public static Object from(CuponEntity cuponEntity) {
-        return new CuponDTO(cuponEntity.getId(), cuponEntity.getNombre(), cuponEntity.getPorcenaje(), cuponEntity.getFechaInicio(), cuponEntity.getFechaFin());
+        return new CuponDTO(cuponEntity.getId(), cuponEntity.getNombre(), cuponEntity.getPorcentaje(), cuponEntity.getFechaInicio(), cuponEntity.getFechaFin());
     }
 }
