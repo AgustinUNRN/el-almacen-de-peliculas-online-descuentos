@@ -18,7 +18,7 @@ public class ValidarCuponRpcListener {
     @RabbitListener(queues = "${rabbitmq.descuentos.cupon.validar.queue}")
     public ValidarCuponResponse validar(ValidarCuponRequest req) {
         if (req == null || req.nombreCupon() == null || req.nombreCupon().isBlank()) {
-            return new ValidarCuponResponse(false, null, "CODIGO_VACIO");
+            return new ValidarCuponResponse(false, null,null,null, "CODIGO_VACIO");
         }
         return cuponService.validarCuponRpc(req.nombreCupon());
     }

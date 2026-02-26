@@ -84,11 +84,22 @@ public class CuponService {
     }
 
     public ValidarCuponResponse validarCuponRpc(String nombreCupon) {
-        Optional<CuponDTO> cuponOpt = validarCupon(nombreCupon);
-        if (cuponOpt.isEmpty()) {
-            return new ValidarCuponResponse(false, null, "NO_EXISTE_O_NO_VIGENTE");
+        CuponEntity cuponEntity = repository.buscarPorNombre(nombreCupon);
+
+        if (cuponEntity == null) {
+            return new ValidarCuponResponse(false, null, null, null, "NO_EXISTE");
         }
-        CuponDTO cupon = cuponOpt.get();
-        return new ValidarCuponResponse(true, cupon.porcentaje(), null); // motivo null cuando es válido
+
+        if (!esValido(cuponEntity)) {
+            return new ValidarCuponResponse(false, null, null, null, "NO_VIGENTE");
+        }
+
+        return new ValidarCuponResponse(
+                true,
+                cuponEntity.getPorcentaje(),
+                cuponEntity.getFechaInicio(),
+                cuponEntity.getFechaFin(),
+                null
+        );
     }
 }
