@@ -17,9 +17,15 @@ public class ValidarCuponRpcListener {
 
     @RabbitListener(queues = "${rabbitmq.descuentos.cupon.validar.queue}")
     public ValidarCuponResponse validar(ValidarCuponRequest req) {
+        System.out.println("RPC validar cupon req=" + req);
+
         if (req == null || req.nombreCupon() == null || req.nombreCupon().isBlank()) {
+            System.out.println("RPC validar cupon -> CODIGO_VACIO");
+
             return new ValidarCuponResponse(false, null,null,null, "CODIGO_VACIO");
         }
-        return cuponService.validarCuponRpc(req.nombreCupon());
+        ValidarCuponResponse resp = cuponService.validarCuponRpc(req.nombreCupon());
+        System.out.println("RPC validar cupon resp=" + resp);
+        return resp;
     }
 }
