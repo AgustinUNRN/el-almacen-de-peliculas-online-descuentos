@@ -2,7 +2,6 @@ package unrn.infra.persistence;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.authentication.ott.InMemoryOneTimeTokenService;
 import unrn.model.Cupon;
 
 import java.time.LocalDate;
@@ -13,16 +12,17 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true) // <--- Agregá esto
+@ToString // <--- Agregá esto para que el test de ToString también pase
 public class CuponEntity {
-
-  //  public CuponEntity() {
-//    } // JPA requiere un constructor sin argumentos
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include // <--- Incluí solo el ID en el equals
     private Integer id;
 
     @Column(nullable = false, length = 15)
+    @ToString.Include // Opcional: para que se vea en el log
     private String nombre;
 
     @Column(name = "fechaInicio", nullable = false)
