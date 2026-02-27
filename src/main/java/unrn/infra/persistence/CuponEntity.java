@@ -9,10 +9,14 @@ import java.time.LocalDate;
 
 @Entity(name = "CuponEntity")
 @Table(name = "cupon")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CuponEntity {
 
-    public CuponEntity() {
-    } // JPA requiere un constructor sin argumentos
+  //  public CuponEntity() {
+//    } // JPA requiere un constructor sin argumentos
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
