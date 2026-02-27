@@ -3,8 +3,6 @@ package unrn.infra.persistence;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
-import unrn.dto.CuponDTO;
-import unrn.model.Cupon;
 
 import java.util.List;
 
@@ -15,9 +13,18 @@ public class CuponRepository {
     private EntityManager em;
 
     public CuponEntity guardar(CuponEntity cupon) {
-        em.persist(cupon);
-        em.flush();
-        return cupon;
+        try {
+            CuponEntity existente = buscarPorNombre(cupon.getNombre());
+            if (existente != null) {
+                throw new IllegalArgumentException("El cupón con nombre '" + cupon.getNombre() + "' ya existe");
+            } else {
+                em.persist(cupon);
+                return cupon;
+            }
+        } catch (Exception e) {
+            System.err.println("DEBUG REPO: Error al guardar cupón '" + cupon.getNombre() + "': " + e.getMessage());
+            throw e;
+        }
     }
 
     public CuponEntity buscarPorNombre(String nombre) {

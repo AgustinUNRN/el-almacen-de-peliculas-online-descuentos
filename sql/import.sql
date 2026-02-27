@@ -29,19 +29,19 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cupon` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(15) NOT NULL,
+  `nombre` varchar(15) NOT NULL UNIQUE,
   `fechaInicio` date NOT NULL,
   `fechaFin` date NOT NULL,
-  `monto` float NOT NULL
+  `porcentaje` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `cupon`
 --
 
-INSERT INTO `cupon` (`id`, `nombre`, `fechaInicio`, `fechaFin`, `monto`) VALUES
-(1, 'CINE20', '2026-01-01', '2026-12-31', 200),
-(2, 'NUEVO50', '2026-03-01', '2026-03-31', 500);
+INSERT INTO `cupon` (`id`, `nombre`, `fechaInicio`, `fechaFin`, `porcentaje`) VALUES
+(1, 'CINE20', '2026-01-01', '2026-12-31', 20),
+(2, 'NUEVO50', '2026-03-01', '2026-03-31', 50);
 
 --
 -- Índices para tablas volcadas

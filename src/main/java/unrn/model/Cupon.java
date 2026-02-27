@@ -9,7 +9,8 @@ public class Cupon {
     static final String ERROR_FECHA_INICIO_VACIA = "La fecha de inicio no puede ser vacía";
     static final String ERROR_FECHA_FIN = "La fecha de fin no puede ser anterior a la fecha de inicio";
     static final String ERROR_FECHA_FIN_VACIA = "La fecha de fin no puede ser vacía";
-    static final String ERROR_MONTO = "El monto del descuento debe ser positivo";
+    static final String ERROR_PORCENTAJE = "El porcentaje del descuento debe ser de 0  a 100";
+    static final String ERROR_PORCENTAJE_NULO = "El porcentaje del descuento no puede ser nulo";
 
     private Integer id;
 
@@ -19,9 +20,9 @@ public class Cupon {
 
     private LocalDate fechaFin;
 
-    private Float monto;
+    private Float porcentaje;
 
-    public Cupon (Integer id, String nombre, LocalDate fechaInicio, LocalDate fechaFin, Float monto) {
+    public Cupon (Integer id, String nombre, LocalDate fechaInicio, LocalDate fechaFin, Float porcentaje) {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new IllegalArgumentException(ERROR_NOMBRE);
         }
@@ -37,15 +38,18 @@ public class Cupon {
         if (fechaFin.isBefore(fechaInicio)) {
             throw new IllegalArgumentException(ERROR_FECHA_FIN);
         }
-        if (monto != null && monto <= 0) {
-            throw new IllegalArgumentException(ERROR_MONTO);
+        if (porcentaje == null) {
+            throw new IllegalArgumentException(ERROR_PORCENTAJE_NULO);
+        }
+        if (porcentaje > 100 || porcentaje < 0) {
+            throw new IllegalArgumentException(ERROR_PORCENTAJE);
         }
 
         this.id = id;
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.monto = monto;
+        this.porcentaje = porcentaje;
     }
 
     public Integer getId() {
@@ -64,8 +68,8 @@ public class Cupon {
         return fechaFin;
     }
 
-    public Float getMonto() {
-        return monto;
+    public Float getPorcentaje() {
+        return porcentaje;
     }
 
 }

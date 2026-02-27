@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import unrn.dto.CuponDTO;
+import unrn.dto.ValidarCuponResponse;
 import unrn.infra.persistence.CuponEntity;
 import unrn.infra.persistence.CuponRepository;
 import unrn.model.Cupon;
@@ -50,7 +51,7 @@ public class CuponService {
         return new CuponDTO(
                 entity.getId(),
                 entity.getNombre(),
-                entity.getMonto(),
+                entity.getPorcentaje(),
                 entity.getFechaInicio(),
                 entity.getFechaFin()
         );
@@ -74,7 +75,7 @@ public class CuponService {
     public CuponDTO crearCupon(CuponDTO cuponDTO) {
         CuponEntity entity = new CuponEntity();
         entity.setNombre(cuponDTO.nombre());
-        entity.setMonto(cuponDTO.monto());
+        entity.setPorcentaje(cuponDTO.porcentaje());
         entity.setFechaInicio(cuponDTO.fechaInicio());
         entity.setFechaFin(cuponDTO.fechaFin());
 
@@ -82,4 +83,23 @@ public class CuponService {
         return convertirADto(guardado);
     }
 
+    public ValidarCuponResponse validarCuponRpc(String nombreCupon) {
+        CuponEntity cuponEntity = repository.buscarPorNombre(nombreCupon);
+
+        if (cuponEntity == null) {
+            return new ValidarCuponResponse(false, null, null, null, "NO_EXISTE");
+        }
+
+        if (!esValido(cuponEntity)) {
+            return new ValidarCuponResponse(false, null, null, null, "NO_VIGENTE");
+        }
+
+        return new ValidarCuponResponse(
+                true,
+                cuponEntity.getPorcentaje(),
+                cuponEntity.getFechaInicio(),
+                cuponEntity.getFechaFin(),
+                null
+        );
+    }
 }
