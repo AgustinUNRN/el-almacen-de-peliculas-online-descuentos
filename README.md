@@ -14,8 +14,6 @@ Este vertical forma parte de una arquitectura de microservicios y se encarga exc
 
 ## Arquitectura del Sistema (Modelo C4)
 
-## Arquitectura del Sistema (Modelo C4)
-
 ### Nivel 1: Contexto
 ```mermaid
 graph LR
