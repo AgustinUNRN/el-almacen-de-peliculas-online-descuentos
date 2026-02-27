@@ -148,12 +148,6 @@ graph LR
     end
 ```
 
-graph TD
-  subgraph "Contexto del Sistema"
-    %% Aquí podés pegar el contenido de structurizr-Contexto.mmd
-    %% O simplemente referenciar la lógica del diagrama
-  end
-
 ## 🏗️ Arquitectura del Proyecto
 
 El proyecto sigue una **arquitectura hexagonal** (puertos y adaptadores) organizada en capas:
