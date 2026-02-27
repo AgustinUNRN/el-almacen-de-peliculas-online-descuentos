@@ -1,7 +1,7 @@
 package unrn.infra.persistence;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.springframework.security.authentication.ott.InMemoryOneTimeTokenService;
 import unrn.model.Cupon;
 
