@@ -33,7 +33,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.GET, "/descuentos/**").permitAll() // Permitir pruebas
+                .requestMatchers(HttpMethod.GET, "/descuentos/**","/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll() // Permitir pruebas
                 .anyRequest().authenticated())
             .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();

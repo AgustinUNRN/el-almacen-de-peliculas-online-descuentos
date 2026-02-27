@@ -1,0 +1,44 @@
+graph LR
+  linkStyle default fill:#ffffff
+
+  subgraph diagram ["Component View: Microservicio Descuentos - Descuentos API"]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    subgraph 8 ["Microservicio Descuentos"]
+      style 8 fill:#ffffff,stroke:#0773af,color:#0773af
+
+      subgraph 9 ["Descuentos API"]
+        style 9 fill:#ffffff,stroke:#0773af,color:#0773af
+
+        10("<div style='font-weight: bold'>DescuentoController</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring MVC]</div><div style='font-size: 80%; margin-top:10px'>REST Controller</div>")
+        style 10 fill:#3498db,stroke:#0773af,color:#ffffff
+        11("<div style='font-weight: bold'>CuponService</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Service]</div><div style='font-size: 80%; margin-top:10px'>Logica de negocio</div>")
+        style 11 fill:#9b59b6,stroke:#0773af,color:#ffffff
+        12("<div style='font-weight: bold'>CuponRepository</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Data JPA]</div><div style='font-size: 80%; margin-top:10px'>Acceso a datos</div>")
+        style 12 fill:#e67e22,stroke:#0773af,color:#ffffff
+        13("<div style='font-weight: bold'>CuponEntity</div><div style='font-size: 70%; margin-top: 0px'>[Component: JPA]</div><div style='font-size: 80%; margin-top:10px'>Entidad JPA</div>")
+        style 13 fill:#e74c3c,stroke:#0773af,color:#ffffff
+        14("<div style='font-weight: bold'>ValidarCuponRpcListener</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring AMQP]</div><div style='font-size: 80%; margin-top:10px'>Listener RPC</div>")
+        style 14 fill:#ffffff,stroke:#0773af,color:#0773af
+        15("<div style='font-weight: bold'>CuponDTO</div><div style='font-size: 70%; margin-top: 0px'>[Component: Java Record]</div><div style='font-size: 80%; margin-top:10px'>DTO de cupon</div>")
+        style 15 fill:#95a5a6,stroke:#0773af,color:#ffffff
+        16("<div style='font-weight: bold'>ValidarCuponRequest</div><div style='font-size: 70%; margin-top: 0px'>[Component: Java Record]</div><div style='font-size: 80%; margin-top:10px'>DTO request RPC</div>")
+        style 16 fill:#95a5a6,stroke:#0773af,color:#ffffff
+        17("<div style='font-weight: bold'>ValidarCuponResponse</div><div style='font-size: 70%; margin-top: 0px'>[Component: Java Record]</div><div style='font-size: 80%; margin-top:10px'>DTO response RPC</div>")
+        style 17 fill:#95a5a6,stroke:#0773af,color:#ffffff
+        18("<div style='font-weight: bold'>SecurityConfig</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Security]</div><div style='font-size: 80%; margin-top:10px'>Seguridad JWT y roles</div>")
+        style 18 fill:#27ae60,stroke:#0773af,color:#ffffff
+      end
+
+    end
+
+    10-. "<div>Protegido por</div><div style='font-size: 70%'></div>" .->18
+    10-. "<div>Usa</div><div style='font-size: 70%'></div>" .->11
+    10-. "<div>Responde con</div><div style='font-size: 70%'></div>" .->15
+    11-. "<div>Consulta</div><div style='font-size: 70%'></div>" .->12
+    12-. "<div>Mapea</div><div style='font-size: 70%'></div>" .->13
+    14-. "<div>Deserializa</div><div style='font-size: 70%'></div>" .->16
+    14-. "<div>Valida</div><div style='font-size: 70%'></div>" .->11
+    14-. "<div>Construye</div><div style='font-size: 70%'></div>" .->17
+
+  end

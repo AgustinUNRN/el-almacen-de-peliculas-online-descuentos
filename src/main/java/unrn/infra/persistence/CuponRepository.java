@@ -3,8 +3,6 @@ package unrn.infra.persistence;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
-import unrn.dto.CuponDTO;
-import unrn.model.Cupon;
 
 import java.util.List;
 
