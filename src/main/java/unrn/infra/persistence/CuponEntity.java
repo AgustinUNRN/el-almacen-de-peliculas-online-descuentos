@@ -2,6 +2,11 @@ package unrn.infra.persistence;
 
 import jakarta.persistence.*;
 import java.util.Objects;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.authentication.ott.InMemoryOneTimeTokenService;
 import unrn.model.Cupon;
 
