@@ -3,7 +3,7 @@ name: CI - descuentos (unit tests)
 on:
   push:
     branches:
-      - test
+      - ci-test
       - main
   pull_request:
     branches:
