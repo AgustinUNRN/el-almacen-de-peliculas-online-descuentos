@@ -1,0 +1,43 @@
+graph LR
+  linkStyle default fill:#ffffff
+
+  subgraph diagram ["Container View: Microservicio Descuentos"]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    1["<div style='font-weight: bold'>Cliente</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Consulta descuentos vigentes</div>"]
+    style 1 fill:#ffffff,stroke:#0773af,color:#0773af
+    2["<div style='font-weight: bold'>Administrador</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Gestiona cupones y descuentos</div>"]
+    style 2 fill:#ffffff,stroke:#0773af,color:#0773af
+    3("<div style='font-weight: bold'>Frontend React Vite</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>SPA que consume descuentos</div>")
+    style 3 fill:#999999,stroke:#0773af,color:#ffffff
+    4("<div style='font-weight: bold'>API Gateway</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Punto de entrada; valida JWT<br />y enruta</div>")
+    style 4 fill:#999999,stroke:#0773af,color:#ffffff
+    5("<div style='font-weight: bold'>Keycloak</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>IAM OAuth2/OIDC con roles<br />ADMIN/CLIENTE</div>")
+    style 5 fill:#2ecc71,stroke:#0773af,color:#ffffff
+    6("<div style='font-weight: bold'>Microservicio Ventas</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Solicita validacion de<br />cupones via RPC</div>")
+    style 6 fill:#999999,stroke:#0773af,color:#ffffff
+    7["<div style='font-weight: bold'>RabbitMQ</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Broker de mensajeria para RPC</div>"]
+    style 7 fill:#999999,stroke:#0773af,color:#ffffff
+
+    subgraph 8 ["Microservicio Descuentos"]
+      style 8 fill:#ffffff,stroke:#0773af,color:#0773af
+
+      27[("<div style='font-weight: bold'>Base de Datos Descuentos</div><div style='font-size: 70%; margin-top: 0px'>[Container: MySQL]</div><div style='font-size: 80%; margin-top:10px'>Persistencia de cupones</div>")]
+      style 27 fill:#ffffff,stroke:#0773af,color:#0773af
+      9("<div style='font-weight: bold'>Descuentos API</div><div style='font-size: 70%; margin-top: 0px'>[Container: Java 17, Spring Boot]</div><div style='font-size: 80%; margin-top:10px'>Expone API REST y consume RPC</div>")
+      style 9 fill:#6db33f,stroke:#0773af,color:#ffffff
+    end
+
+    1-. "<div>Consulta descuentos</div><div style='font-size: 70%'></div>" .->3
+    2-. "<div>Administra cupones</div><div style='font-size: 70%'></div>" .->3
+    3-. "<div>Autentica</div><div style='font-size: 70%'></div>" .->5
+    5-. "<div>Entrega JWT</div><div style='font-size: 70%'></div>" .->3
+    3-. "<div>Llama API con JWT</div><div style='font-size: 70%'></div>" .->4
+    4-. "<div>Valida JWT</div><div style='font-size: 70%'></div>" .->5
+    4-. "<div>Enruta</div><div style='font-size: 70%'></div>" .->9
+    6-. "<div>Solicita validacion RPC</div><div style='font-size: 70%'></div>" .->7
+    7-. "<div>Entrega mensaje</div><div style='font-size: 70%'></div>" .->9
+    9-. "<div>Responde RPC</div><div style='font-size: 70%'></div>" .->7
+    9-. "<div>Lee/Escribe</div><div style='font-size: 70%'></div>" .->27
+
+  end

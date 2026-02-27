@@ -11,6 +11,151 @@ Este vertical forma parte de una arquitectura de microservicios y se encarga exc
 - Verificar vigencia temporal de descuentos
 - Responder consultas RPC desde otros servicios vía RabbitMQ
 
+
+## Arquitectura del Sistema (Modelo C4)
+
+## Arquitectura del Sistema (Modelo C4)
+
+### Nivel 1: Contexto
+```mermaid
+graph LR
+    linkStyle default fill:#ffffff
+
+    subgraph diagram ["System Context View: Microservicio Descuentos"]
+        style diagram fill:#ffffff,stroke:#ffffff
+
+        1["<div style='font-weight: bold'>Cliente</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Consulta descuentos vigentes</div>"]
+        style 1 fill:#ffffff,stroke:#0773af,color:#0773af
+        2["<div style='font-weight: bold'>Administrador</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Gestiona cupones y descuentos</div>"]
+        style 2 fill:#ffffff,stroke:#0773af,color:#0773af
+        3("<div style='font-weight: bold'>Frontend React Vite</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>SPA que consume descuentos</div>")
+        style 3 fill:#999999,stroke:#0773af,color:#ffffff
+        4("<div style='font-weight: bold'>API Gateway</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Punto de entrada; valida JWT<br />y enruta</div>")
+        style 4 fill:#999999,stroke:#0773af,color:#ffffff
+        5("<div style='font-weight: bold'>Keycloak</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>IAM OAuth2/OIDC con roles<br />ADMIN/CLIENTE</div>")
+        style 5 fill:#2ecc71,stroke:#0773af,color:#ffffff
+        6("<div style='font-weight: bold'>Microservicio Ventas</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Solicita validacion de<br />cupones via RPC</div>")
+        style 6 fill:#999999,stroke:#0773af,color:#ffffff
+        7["<div style='font-weight: bold'>RabbitMQ</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Broker de mensajeria para RPC</div>"]
+        style 7 fill:#999999,stroke:#0773af,color:#ffffff
+        8("<div style='font-weight: bold'>Microservicio Descuentos</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Gestion de cupones,<br />validacion y consultas</div>")
+        style 8 fill:#1168bd,stroke:#0773af,color:#ffffff
+
+        1-. "<div>Consulta descuentos</div><div style='font-size: 70%'></div>" .->3
+        2-. "<div>Administra cupones</div><div style='font-size: 70%'></div>" .->3
+        3-. "<div>Autentica</div><div style='font-size: 70%'></div>" .->5
+        5-. "<div>Entrega JWT</div><div style='font-size: 70%'></div>" .->3
+        3-. "<div>Llama API con JWT</div><div style='font-size: 70%'></div>" .->4
+        4-. "<div>Valida JWT</div><div style='font-size: 70%'></div>" .->5
+        4-. "<div>Enruta</div><div style='font-size: 70%'></div>" .->8
+        6-. "<div>Solicita validacion RPC</div><div style='font-size: 70%'></div>" .->7
+        7-. "<div>Entrega mensaje</div><div style='font-size: 70%'></div>" .->8
+        8-. "<div>Responde RPC</div><div style='font-size: 70%'></div>" .->7
+
+    end
+```
+
+### Nivel 2: Contenedores
+```mermaid
+graph LR
+    linkStyle default fill:#ffffff
+
+    subgraph diagram ["Container View: Microservicio Descuentos"]
+        style diagram fill:#ffffff,stroke:#ffffff
+
+        1["<div style='font-weight: bold'>Cliente</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Consulta descuentos vigentes</div>"]
+        style 1 fill:#ffffff,stroke:#0773af,color:#0773af
+        2["<div style='font-weight: bold'>Administrador</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Gestiona cupones y descuentos</div>"]
+        style 2 fill:#ffffff,stroke:#0773af,color:#0773af
+        3("<div style='font-weight: bold'>Frontend React Vite</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>SPA que consume descuentos</div>")
+        style 3 fill:#999999,stroke:#0773af,color:#ffffff
+        4("<div style='font-weight: bold'>API Gateway</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Punto de entrada; valida JWT<br />y enruta</div>")
+        style 4 fill:#999999,stroke:#0773af,color:#ffffff
+        5("<div style='font-weight: bold'>Keycloak</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>IAM OAuth2/OIDC con roles<br />ADMIN/CLIENTE</div>")
+        style 5 fill:#2ecc71,stroke:#0773af,color:#ffffff
+        6("<div style='font-weight: bold'>Microservicio Ventas</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Solicita validacion de<br />cupones via RPC</div>")
+        style 6 fill:#999999,stroke:#0773af,color:#ffffff
+        7["<div style='font-weight: bold'>RabbitMQ</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Broker de mensajeria para RPC</div>"]
+        style 7 fill:#999999,stroke:#0773af,color:#ffffff
+
+        subgraph 8 ["Microservicio Descuentos"]
+            style 8 fill:#ffffff,stroke:#0773af,color:#0773af
+
+            27[("<div style='font-weight: bold'>Base de Datos Descuentos</div><div style='font-size: 70%; margin-top: 0px'>[Container: MySQL]</div><div style='font-size: 80%; margin-top:10px'>Persistencia de cupones</div>")]
+            style 27 fill:#ffffff,stroke:#0773af,color:#0773af
+            9("<div style='font-weight: bold'>Descuentos API</div><div style='font-size: 70%; margin-top: 0px'>[Container: Java 17, Spring Boot]</div><div style='font-size: 80%; margin-top:10px'>Expone API REST y consume RPC</div>")
+            style 9 fill:#6db33f,stroke:#0773af,color:#ffffff
+        end
+
+        1-. "<div>Consulta descuentos</div><div style='font-size: 70%'></div>" .->3
+        2-. "<div>Administra cupones</div><div style='font-size: 70%'></div>" .->3
+        3-. "<div>Autentica</div><div style='font-size: 70%'></div>" .->5
+        5-. "<div>Entrega JWT</div><div style='font-size: 70%'></div>" .->3
+        3-. "<div>Llama API con JWT</div><div style='font-size: 70%'></div>" .->4
+        4-. "<div>Valida JWT</div><div style='font-size: 70%'></div>" .->5
+        4-. "<div>Enruta</div><div style='font-size: 70%'></div>" .->9
+        6-. "<div>Solicita validacion RPC</div><div style='font-size: 70%'></div>" .->7
+        7-. "<div>Entrega mensaje</div><div style='font-size: 70%'></div>" .->9
+        9-. "<div>Responde RPC</div><div style='font-size: 70%'></div>" .->7
+        9-. "<div>Lee/Escribe</div><div style='font-size: 70%'></div>" .->27
+
+    end
+```
+
+### Nivel 3: Componentes (API & RabbitMQ)
+```mermaid
+graph LR
+    linkStyle default fill:#ffffff
+
+    subgraph diagram ["Component View: Microservicio Descuentos - Descuentos API"]
+        style diagram fill:#ffffff,stroke:#ffffff
+
+        subgraph 8 ["Microservicio Descuentos"]
+            style 8 fill:#ffffff,stroke:#0773af,color:#0773af
+
+            subgraph 9 ["Descuentos API"]
+                style 9 fill:#ffffff,stroke:#0773af,color:#0773af
+
+                10("<div style='font-weight: bold'>DescuentoController</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring MVC]</div><div style='font-size: 80%; margin-top:10px'>REST Controller</div>")
+                style 10 fill:#3498db,stroke:#0773af,color:#ffffff
+                11("<div style='font-weight: bold'>CuponService</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Service]</div><div style='font-size: 80%; margin-top:10px'>Logica de negocio</div>")
+                style 11 fill:#9b59b6,stroke:#0773af,color:#ffffff
+                12("<div style='font-weight: bold'>CuponRepository</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Data JPA]</div><div style='font-size: 80%; margin-top:10px'>Acceso a datos</div>")
+                style 12 fill:#e67e22,stroke:#0773af,color:#ffffff
+                13("<div style='font-weight: bold'>CuponEntity</div><div style='font-size: 70%; margin-top: 0px'>[Component: JPA]</div><div style='font-size: 80%; margin-top:10px'>Entidad JPA</div>")
+                style 13 fill:#e74c3c,stroke:#0773af,color:#ffffff
+                14("<div style='font-weight: bold'>ValidarCuponRpcListener</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring AMQP]</div><div style='font-size: 80%; margin-top:10px'>Listener RPC</div>")
+                style 14 fill:#ffffff,stroke:#0773af,color:#0773af
+                15("<div style='font-weight: bold'>CuponDTO</div><div style='font-size: 70%; margin-top: 0px'>[Component: Java Record]</div><div style='font-size: 80%; margin-top:10px'>DTO de cupon</div>")
+                style 15 fill:#95a5a6,stroke:#0773af,color:#ffffff
+                16("<div style='font-weight: bold'>ValidarCuponRequest</div><div style='font-size: 70%; margin-top: 0px'>[Component: Java Record]</div><div style='font-size: 80%; margin-top:10px'>DTO request RPC</div>")
+                style 16 fill:#95a5a6,stroke:#0773af,color:#ffffff
+                17("<div style='font-weight: bold'>ValidarCuponResponse</div><div style='font-size: 70%; margin-top: 0px'>[Component: Java Record]</div><div style='font-size: 80%; margin-top:10px'>DTO response RPC</div>")
+                style 17 fill:#95a5a6,stroke:#0773af,color:#ffffff
+                18("<div style='font-weight: bold'>SecurityConfig</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Security]</div><div style='font-size: 80%; margin-top:10px'>Seguridad JWT y roles</div>")
+                style 18 fill:#27ae60,stroke:#0773af,color:#ffffff
+            end
+
+        end
+
+        10-. "<div>Protegido por</div><div style='font-size: 70%'></div>" .->18
+        10-. "<div>Usa</div><div style='font-size: 70%'></div>" .->11
+        10-. "<div>Responde con</div><div style='font-size: 70%'></div>" .->15
+        11-. "<div>Consulta</div><div style='font-size: 70%'></div>" .->12
+        12-. "<div>Mapea</div><div style='font-size: 70%'></div>" .->13
+        14-. "<div>Deserializa</div><div style='font-size: 70%'></div>" .->16
+        14-. "<div>Valida</div><div style='font-size: 70%'></div>" .->11
+        14-. "<div>Construye</div><div style='font-size: 70%'></div>" .->17
+
+    end
+```
+
+graph TD
+  subgraph "Contexto del Sistema"
+    %% Aquí podés pegar el contenido de structurizr-Contexto.mmd
+    %% O simplemente referenciar la lógica del diagrama
+  end
+
 ## 🏗️ Arquitectura del Proyecto
 
 El proyecto sigue una **arquitectura hexagonal** (puertos y adaptadores) organizada en capas:
