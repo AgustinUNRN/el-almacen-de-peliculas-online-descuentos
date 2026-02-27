@@ -156,6 +156,31 @@ docker run -p 8085:8085 \
 
 > En el perfil `docker`, el servicio se conecta a `descuentos-mysql:3306`, `shared-rabbitmq:5672` y `keycloak-sso:8080`.
 
+## ✅ Pruebas y Cobertura
+
+Este proyecto incluye una suite principal que ejecuta todos los tests del microservicio:
+- `src/test/java/unrn/ElAlmacenDePeliculasOnlineDescuentosApplicationTests.java`
+
+### Ejecutar todos los tests (Maven)
+
+```bash
+mvn clean test
+```
+
+### Ejecutar tests con reporte de cobertura (JaCoco)
+
+```bash
+mvn clean test jacoco:report
+```
+
+### Ejecutar con Coverage en IntelliJ
+
+1. Abre `src/test/java/unrn/ElAlmacenDePeliculasOnlineDescuentosApplicationTests.java`
+2. Click derecho en la clase
+3. Selecciona "Run 'ElAlmacenDePeliculasOnlineDescuentosApplicationTests' with Coverage"
+
+> Nota: ejecutar un test individual con Coverage solo mide lo que ese test ejecuta.
+
 ## 📡 API Endpoints
 
 ### 🔹 Health Check
@@ -312,75 +337,6 @@ curl -X POST "http://localhost:8085/descuentos/crear" \
   -d '{"nombre":"NAVIDAD2026","porcentaje":15.0,"fechaInicio":"2026-12-01","fechaFin":"2026-12-31"}'
 ```
 
-## 🧪 Testing
-
-Ejecutar los tests:
-```bash
-./mvnw test
-```
-
-## 📝 Configuración
-
-### `src/main/resources/application.yml` (perfil Docker)
-
-```yaml
-spring:
-  datasource:
-    url: jdbc:mysql://descuentos-mysql:3306/db_descuentos
-    username: root
-    password: root
-  jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: true
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://keycloak-sso:8080/realms/videoclub
-          jwk-set-uri: http://keycloak-sso:8080/realms/videoclub/protocol/openid-connect/certs
-
-eureka:
-  client:
-    enabled: false
-```
-
-### `src/main/resources/application.properties` (perfil local)
-
-```properties
-# RabbitMQ
-spring.rabbitmq.host=localhost
-spring.rabbitmq.port=5672
-spring.rabbitmq.username=guest
-spring.rabbitmq.password=guest
-
-rabbitmq.descuentos.exchange=descuentos.exchange
-rabbitmq.descuentos.cupon.validar.queue=descuentos.cupon.validar.queue
-rabbitmq.descuentos.cupon.validar.routing-key=descuentos.cupon.validar
-```
-
-## 🐛 Logging
-
-El proyecto incluye logging detallado de Hibernate para facilitar el debug:
-
-```yaml
-logging:
-  level:
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-```
-
-## 🔄 Integración con Otros Servicios
-
-Este microservicio está diseñado para integrarse con:
-- **Servicio de Ventas/Compras** - Consulta cupones vía RPC sobre RabbitMQ para aplicar descuentos en transacciones
-- **API Gateway** - Como punto de entrada centralizado
-- **RabbitMQ** - Para validación de cupones en tiempo real desde otros microservicios
-
-## 👨‍💻 Desarrollador
-
-**Agustín Fernández**
-
 ## 📄 Licencia
 
 Este proyecto es parte de un sistema académico/empresarial privado.
@@ -388,4 +344,3 @@ Este proyecto es parte de un sistema académico/empresarial privado.
 ---
 
 ⭐ **¡Gracias por usar el Microservicio de Descuentos!** ⭐
-
