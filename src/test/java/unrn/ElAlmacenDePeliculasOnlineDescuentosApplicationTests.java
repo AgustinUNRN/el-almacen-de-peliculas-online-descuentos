@@ -5,6 +5,8 @@ import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 import org.junit.platform.suite.api.SuiteDisplayName;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ActiveProfiles;
 import unrn.app.ElAlmacenDePeliculasOnlineDescuentosApplication;
 
@@ -36,7 +38,7 @@ import unrn.app.ElAlmacenDePeliculasOnlineDescuentosApplication;
 		"unrn.model", // Tests del modelo de dominio
 		"unrn.service" // Tests del servicio de negocio
 })
-@SpringBootTest(classes = ElAlmacenDePeliculasOnlineDescuentosApplication.class)
+@SpringBootTest(classes = ElAlmacenDePeliculasOnlineDescuentosApplicationTests.TestConfig.class)
 @ActiveProfiles("test")
 class ElAlmacenDePeliculasOnlineDescuentosApplicationTests {
 
