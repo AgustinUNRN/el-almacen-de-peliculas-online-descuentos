@@ -124,6 +124,10 @@
 				<version>3.5.2</version>
 				<configuration>
 					<argLine>@{argLine} -Xmx1024m</argLine>
+					<excludes>
+						<exclude>**/*IT.java</exclude>
+						<exclude>**/*IntegrationTest.java</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 			<plugin>
