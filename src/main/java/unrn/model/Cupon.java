@@ -38,11 +38,11 @@ public class Cupon {
         if (fechaFin.isBefore(fechaInicio)) {
             throw new IllegalArgumentException(ERROR_FECHA_FIN);
         }
-        if (porcentaje > 100 || porcentaje < 0) {
-            throw new IllegalArgumentException(ERROR_PORCENTAJE);
-        }
         if (porcentaje == null) {
             throw new IllegalArgumentException(ERROR_PORCENTAJE_NULO);
+        }
+        if (porcentaje > 100 || porcentaje < 0) {
+            throw new IllegalArgumentException(ERROR_PORCENTAJE);
         }
 
         this.id = id;
